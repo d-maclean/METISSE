@@ -40,8 +40,6 @@ subroutine allocate_track(n,mass)
     integer, intent(in):: n
     real(dp), intent(in), optional :: mass(:)
         
-!    n= 1
-!    n = size(mass)
 !    print*,"I am in alloc_track with ", n,mass
 
     allocate(tarr(n))
@@ -60,23 +58,21 @@ end subroutine allocate_track
 subroutine dealloc_track()
     use track_support
     implicit none
-    
     integer:: n,i
 
     n = size(tarr)
-    
-!    print*," deallocating", n
 
     do i = 1,n
-        deallocate(tarr(i)% eep)
-        deallocate(tarr(i)% tr)
-        deallocate(tarr(i)% cols)
-        deallocate(tarr(i)% bounds)
-        if((tarr(i)% ierr/=0).and.verbose) write(UNIT=err_unit,fmt=*)'METISSE: error in evolving the system',i
-
-    code_error = .false.
-
+        if (allocated(tarr(i)% eep)) then
+            deallocate(tarr(i)% eep)
+            deallocate(tarr(i)% tr)
+            deallocate(tarr(i)% cols)
+            deallocate(tarr(i)% bounds)
+            if((tarr(i)% ierr/=0).and.verbose) write(UNIT=err_unit,fmt=*)'METISSE: error in evolving the system',i
+        endif
+        code_error = .false.
     end do
+    
     deallocate(tarr)
 end subroutine dealloc_track
 
