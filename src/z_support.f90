@@ -575,7 +575,7 @@ module z_support
 
         !now find the column
         locate_column = -1
-        if (len(trim(colname)<1)) return
+        if (len(trim(colname))<1) return
         
         do i=1,size(cols)
            if(adjustl(adjustr(cols(i)% name))==trim(colname)) then
