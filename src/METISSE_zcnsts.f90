@@ -108,7 +108,7 @@ subroutine METISSE_zcnsts(z,zpars,path_to_tracks,path_to_he_tracks,ierr)
         ! these file contain information about eep tracks, their metallicity
         ! and the format file
         
-        if (len(METALLICITY_DIR)< 1) then
+        if (len(trim(METALLICITY_DIR))< 1) then
             write(*,*) "METISSE error: METALLICITY_DIR/path_to_tracks is an empty string"
             ierr = 1
             return
@@ -126,7 +126,7 @@ subroutine METISSE_zcnsts(z,zpars,path_to_tracks,path_to_he_tracks,ierr)
             endif
         endif
         
-        if (len(METALLICITY_DIR_HE)< 1) then
+        if (len(trim(METALLICITY_DIR_HE))< 1) then
             write(out_unit,*) "Warning: METALLICITY_DIR_HE/path_to_he_tracks is an empty string"
             write(out_unit,*) "Switching to SSE formulae for helium stars "
             nloop = 1
