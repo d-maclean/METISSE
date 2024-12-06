@@ -260,7 +260,7 @@ module z_support
         
         ierr = 0
         
-        if (len(path) <1 )then
+        if (len(trim(path)) <1 )then
             ierr = 1; return
         endif
         
@@ -575,7 +575,7 @@ module z_support
 
         !now find the column
         locate_column = -1
-        if (len(colname)<1) return
+        if (len(trim(colname)<1)) return
         
         do i=1,size(cols)
            if(adjustl(adjustr(cols(i)% name))==trim(colname)) then
