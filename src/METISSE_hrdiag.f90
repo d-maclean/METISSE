@@ -12,7 +12,7 @@
     implicit none
     integer, intent(in), optional :: id
     real(dp) :: mass,aj,mt,tm,tn,tscls(20),lums(10),GB(10),zpars(20)
-    real(dp) :: r,lum,mc,rc,menv,renv,k2,mcx
+    real(dp) :: r,lum,mc,rc,menv,renv,k2,mcx,env_frac
     
     integer :: kw,i,idd,j_bagb,old_phase
     real(dp) :: rg,rzams,rtms
@@ -51,6 +51,12 @@
     dt_hold = aj - t% pars% age
     if (aj/=aj) aj = t% pars% age
     t% pars% age = aj
+
+    IF (t% pars% phase < He_MS) THEN
+        env_frac = MAX((mt - mc) / mt, 0d0)
+    ELSE
+        env_frac = 0d0
+    END IF
     
     IF (t% pars% phase<=TPAGB) THEN
         if (t% post_agb) then
@@ -106,7 +112,8 @@
                 
                 has_become_remnant = .true.
             
-            ELSEIF (check_ge(t% pars% core_mass,t% pars% mass)) THEN
+            ELSEIF (env_frac < tiny .and. t% pars% phase > MS) THEN
+                !(check_ge(t% pars% core_mass,t% pars% mass)) THEN
                 !check if envelope has been lost
 
                 if (debug)print*,"envelope lost at",t% pars% age,t% pars% phase,t% pars% mass,t% pars% core_mass

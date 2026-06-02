@@ -620,9 +620,9 @@ module interp_support
         integer, allocatable:: nbr_eeps(:)
 
         debug_age = .false.
-!         if (t% is_he_track) debug_age = .true.
-    !    if (t% pars% phase >= 4 .and. (present(icolumn).eqv..false.)) debug_age = .true.
-        if ((present(icolumn).eqv..true.)) debug_age = .true.
+        !if (t% is_he_track) debug_age = .true.
+        !if (t% pars% phase >= 4 .and. (present(icolumn).eqv..false.)) debug_age = .true.
+        !if ((present(icolumn).eqv..true.)) debug_age = .true.
 
 
         if (debug_age) print*,"in interpolate age",t% pars% phase
